@@ -3,6 +3,7 @@
 ## Introduction
 
 Add this extension to any page type, to get the following batch image upload interface in the CMS:
+
 ![Screenshot](screenshot.png)
 
 It allows images to be bulk uploaded, drag and drop reordering and inline caption adding.
@@ -27,7 +28,7 @@ composer require purplespider/silverstripe-basic-gallery-extension ^1
 
 The Extension can be applied to any page type to enable the gallery functionality.
 
-You can also customise the CMS tab that the gallery appears on, as well as the title of the gallery displayed in the CMS:
+You can also customise the CMS tab that the gallery appears on, as well as the title of the gallery displayed in the CMS, and rename the main Content tab:
 
 ````
 HomePage:
@@ -35,4 +36,5 @@ HomePage:
     - PurpleSpider\BasicGalleries\PhotoGalleryExtension
   gallery-title: Image Gallery
   gallery-cms-tab: Main
+  content-cms-tab: Top Content
 ````
