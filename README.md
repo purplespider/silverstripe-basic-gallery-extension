@@ -3,9 +3,9 @@
 ## Introduction
 
 Add this extension to any page type, to get the following batch image upload interface in the CMS:
-(image).
+![Screenshot](screenshot.png)
 
-It allows images to be bulk uploaded, drag and drop reordering and captions added.
+It allows images to be bulk uploaded, drag and drop reordering and inline caption adding.
 
 Or use the following modules:
 * [Basic Image Gallery Page](https://github.com/purplespider/silverstripe-basic-galleries) - Uses this extension to provide Image Gallery Page and Image Gallery Holder page types.

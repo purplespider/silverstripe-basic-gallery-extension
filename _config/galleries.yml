@@ -3,6 +3,6 @@ Name: basic-gallery-extension
 ---
 SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
-    - 'purplespider/silverstripe-elemental-basic-gallery:client/dist/css/cms.css'
+    - 'purplespider/silverstripe-basic-gallery-extension:client/dist/css/cms.css'
 PurpleSpider\BasicGalleryExtension\PhotoGalleryImage:
   ondelete_delete_image_files: false
