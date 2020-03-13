@@ -2,6 +2,7 @@
 
 namespace PurpleSpider\BasicGalleryExtension;
 
+use PurpleSpider\ElementalBasicGallery\ImageGalleryBlock;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
 
@@ -15,7 +16,8 @@ class PhotoGalleryImage extends DataObject
     
     private static $has_one = [
         'Image' => Image::class,
-        'PhotoGalleryPage' => 'Page'
+        'PhotoGalleryPage' => 'Page',
+        'PhotoGalleryBlock' => ImageGalleryBlock::class,
     ];
     
     private static $summary_fields = [
