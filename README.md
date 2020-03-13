@@ -8,8 +8,8 @@ Add this extension to any page type, to get the following batch image upload int
 It allows images to be bulk uploaded, drag and drop reordering and captions added.
 
 Or use the following modules:
-* Basic Image Gallery Page - Uses this extension to provide Image Gallery Page and Image Gallery Holder page types.
-* Basic Image Gallery Elemental Block - Uses this extension to provide an Image Gallery Elemental block.
+* [Basic Image Gallery Page](https://github.com/purplespider/silverstripe-basic-galleries) - Uses this extension to provide Image Gallery Page and Image Gallery Holder page types.
+* Basic Image Gallery Elemental Block - Uses this extension to provide an Image Gallery Elemental block. (COMING SOON)
 
 ## Maintainer Contact ##
  * James Cocker (ssmodulesgithub@pswd.biz)
