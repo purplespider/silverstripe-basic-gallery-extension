@@ -10,7 +10,7 @@ It allows images to be bulk uploaded, drag and drop reordering and inline captio
 
 Or use the following modules:
 * [Basic Image Gallery Page](https://github.com/purplespider/silverstripe-basic-galleries) - Uses this extension to provide Image Gallery Page and Image Gallery Holder page types.
-* Basic Image Gallery Elemental Block - Uses this extension to provide an Image Gallery Elemental block. (COMING SOON)
+* [Basic Image Gallery Elemental Block](https://github.com/purplespider/silverstripe-elemental-basic-gallery) - Uses this extension to provide an Image Gallery Elemental block.
 
 ## Maintainer Contact ##
  * James Cocker (ssmodulesgithub@pswd.biz)
