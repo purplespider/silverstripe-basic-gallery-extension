@@ -20,8 +20,8 @@ class PhotoGalleryImage extends DataObject
     ];
 
     private static $summary_fields = [
-        'Thumbnail' => 'Image',
-        'Title' => 'Caption',
+        'Thumbnail',
+        'Title',
     ];
 
     private static $owns = [
@@ -39,7 +39,6 @@ class PhotoGalleryImage extends DataObject
     {
         $fields = parent::getCMSFields();
 
-        $fields->renameField("Title", "Caption");
         $fields->removeFieldFromTab("Root.Main", "SortOrder");
         $fields->removeFieldFromTab("Root.Main", "PhotoGalleryPageID");
 
@@ -65,6 +64,16 @@ class PhotoGalleryImage extends DataObject
 
   		parent::onBeforeDelete();
   	}
+
+    public function fieldLabels($includerelations = true)
+    {
+        $translatedLabels = [
+            'Thumbnail' => _t('PurpleSpider\BasicGalleryExtension\PhotoGalleryImage.Thumbnail', 'Image') //used in summary_fields
+        ];
+        
+        return array_merge(parent::fieldLabels($includerelations), $translatedLabels);
+    }
+
 
     public function canCreate($member = null, $context = array())
     {
