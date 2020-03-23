@@ -40,6 +40,8 @@ class PhotoGalleryExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
+        $fields->removeFieldFromTab('Root', 'PhotoGalleryImages');
+
         if (!$galleryCMSTab = $this->owner->config()->get('gallery-cms-tab')) {
           $galleryCMSTab = "Main";
         }
