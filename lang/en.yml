@@ -1,0 +1,14 @@
+en:
+  PurpleSpider\BasicGalleryExtension\PhotoGalleryImage:
+    PLURALNAME: 'Photo Gallery Images'
+    PLURALS:
+      one: 'Photo Gallery Image'
+      other: '{count} Photo Gallery Images'
+    SINGULARNAME: 'Photo Gallery Image'
+    db_Title: Caption
+    has_one_Image: Image
+    has_one_Album: Album
+    Thumbnail: Image
+  PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension:
+    AddImages: Add Images
+    ImageGallery: Image Gallery

@@ -1,0 +1,14 @@
+de:
+  PurpleSpider\BasicGalleryExtension\PhotoGalleryImage:
+    PLURALNAME: 'Galeriebilder'
+    PLURALS:
+      one: 'Galeriebild'
+      other: '{count} Galeriebilder'
+    SINGULARNAME: 'Galeriebild'
+    db_Title: Beschreibung
+    has_one_Image: Bild
+    has_one_Album: Album
+    Thumbnail: Bild
+  PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension:
+    AddImages: Bilder hinzufügen
+    ImageGallery: Bildergalerie

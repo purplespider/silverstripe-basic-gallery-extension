@@ -28,37 +28,35 @@ use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
 
 class PhotoGalleryExtension extends DataExtension
 {
-    
+
     // One gallery page has many gallery images
     private static $has_many = array(
     'PhotoGalleryImages' => PhotoGalleryImage::class
     );
-    
+
     private static $owns = [
       'PhotoGalleryImages'
     ];
-        
+
     public function updateCMSFields(FieldList $fields)
     {
+        $fields->removeFieldFromTab('Root', 'PhotoGalleryImages');
+
         if (!$galleryCMSTab = $this->owner->config()->get('gallery-cms-tab')) {
           $galleryCMSTab = "Main";
         }
-        
+
         $insertGalleryBefore = null;
         if ($galleryCMSTab == "Main") {
           $insertGalleryBefore = "Metadata";
         }
-        
-        if (!$galleryTitle = $this->owner->config()->get('gallery-title')) {
-          $galleryTitle = "Image Gallery";
-        }
-    
+
         $gridFieldConfig = new GridFieldConfig();
-        
+
         $gridFieldConfig->addComponent(new BulkUploader());
         $bulkUpload = $gridFieldConfig->getComponentByType(BulkUploader::class);
         $bulkUpload->setUfSetup('setFolderName', $this->getBulkUploadFolderName());
-        
+
         $gridFieldConfig->addComponent(GridFieldOrderableRows::create()->setSortField('SortOrder'));
         $gridFieldConfig->addComponent(new GridFieldButtonRow('before'));
         $gridFieldConfig->addComponent(new GridFieldToolbarHeader());
@@ -71,24 +69,43 @@ class PhotoGalleryExtension extends DataExtension
         $gridFieldConfig->addComponent(new GridFieldPageCount('toolbar-header-right'));
         $gridFieldConfig->addComponent(new GridFieldPaginator(100));
         $gridFieldConfig->addComponent(new GridFieldDetailForm());
-        
-        $gridfield = new GridField("PhotoGalleryImages", $galleryTitle, $this->owner->PhotoGalleryImages(), $gridFieldConfig);
-        $fields->addFieldToTab('Root.'.$galleryCMSTab, HeaderField::create('addHeader','Add Images'),$insertGalleryBefore);
+
+        $gridfield = new GridField("PhotoGalleryImages", $this->getGalleryTitle(), $this->owner->PhotoGalleryImages(), $gridFieldConfig);
+        $fields->addFieldToTab('Root.'.$galleryCMSTab,
+            HeaderField::create('addHeader',
+                _t('PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension.AddImages','Add Images')
+            ),
+            $insertGalleryBefore);
         $fields->addFieldToTab('Root.'.$galleryCMSTab, $gridfield,$insertGalleryBefore);
-        
+
         return $fields;
     }
-    
+
     public function GetGalleryImages()
     {
         return $this->owner->PhotoGalleryImages()->sort("SortOrder");
     }
-    
+
     protected function getBulkUploadFolderName()
     {
         if ($this->owner->hasMethod('getBulkUploadFolderName')) {
             return $this->owner->getBulkUploadFolderName();
         }
         return "Managed/PhotoGalleries/".$this->owner->ID."-".$this->owner->URLSegment;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getGalleryTitle()
+    {
+        if (!$galleryTitle = $this->owner->config()->get('gallery-title')) {
+            $galleryTitle = _t('PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension.ImageGallery',
+                'Image Gallery');
+        }
+
+        $this->owner->extend('updateGalleryTitle', $galleryTitle);
+
+        return $galleryTitle;
     }
 }
