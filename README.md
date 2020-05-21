@@ -33,7 +33,7 @@ You can also customise the CMS tab that the gallery appears on, as well as the t
 ````
 HomePage:
   extensions:
-    - PurpleSpider\BasicGalleries\PhotoGalleryExtension
+    - PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension
   gallery-title: Image Gallery
   gallery-cms-tab: Main
   content-cms-tab: Top Content
