@@ -74,6 +74,14 @@ class PhotoGalleryImage extends DataObject
         return array_merge(parent::fieldLabels($includerelations), $translatedLabels);
     }
 
+    public function getParentPhotoGalleryPage()
+    {
+        if($this->Album()->ClassName == 'PurpleSpider\BasicGalleries\PhotoGalleryPage') {
+            return $this->Album();
+        }
+
+        return false;
+    }
 
     public function canCreate($member = null, $context = array())
     {
