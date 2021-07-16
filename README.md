@@ -24,6 +24,9 @@ Or use the following modules:
 composer require purplespider/silverstripe-basic-gallery-extension ^3
 ````
 
+## Upgrading Notes
+* Upgrading to v3 will break existing galleries due to a change to a polymorphic relation.
+
 ## Config
 
 The Extension can be applied to any page type to enable the gallery functionality.
