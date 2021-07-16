@@ -21,7 +21,7 @@ Or use the following modules:
 ## Installation Instructions
 
 ````
-composer require purplespider/silverstripe-basic-gallery-extension ^2
+composer require purplespider/silverstripe-basic-gallery-extension ^3
 ````
 
 ## Config
