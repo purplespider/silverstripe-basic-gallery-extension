@@ -24,8 +24,10 @@ Or use the following modules:
 composer require purplespider/silverstripe-basic-gallery-extension ^3
 ````
 
-## Upgrading Notes
-* Upgrading to v3 will break existing galleries due to a change to a polymorphic relation.
+## v3 Upgrade Notes
+* Upgrading to v3 will break existing galleries due to a change to a polymorphic relation, to fix:
+1. Run `dev/build`
+2. Run `/dev/tasks/upgrade-basic-galleries` script.
 
 ## Config
 
