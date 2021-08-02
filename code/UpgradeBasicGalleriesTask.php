@@ -26,7 +26,7 @@ class UpgradeBasicGalleriesTask extends BuildTask {
         foreach($result as $row) {
             if(isset($row['PhotoGalleryPageID']) && $row['PhotoGalleryPageID']) {
                 $page = SiteTree::get()->byID($row['PhotoGalleryPageID']);
-                if($page->exists()) {
+                if($page) {
                     $pageClassname = $page->ClassName;
                     $update = SQLUpdate::create('"PhotoGalleryImage"')->addWhere(['ID' => $row['ID']]);
                     $update->assign('"AlbumID"', $row['PhotoGalleryPageID']);
