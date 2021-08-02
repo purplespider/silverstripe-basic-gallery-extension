@@ -82,6 +82,12 @@ class PhotoGalleryImage extends DataObject
 
         return false;
     }
+    
+    // To support old custom templates
+    public function getPhotoGalleryPage()
+    {
+        return $this->getParentPhotoGalleryPage() ? $this->getParentPhotoGalleryPage() : false;
+    }
 
     public function canCreate($member = null, $context = array())
     {
