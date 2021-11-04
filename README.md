@@ -47,7 +47,7 @@ HomePage:
   gallery-cms-tab: Main
   content-cms-tab: Top Content
 ````
-
+### Automatically Delete Image Files
 To automatically delete image files when an image is deleted from a gallery:
 ````yml
 ---
