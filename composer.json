@@ -17,7 +17,8 @@
 		"silverstripe/cms": "^4.1",
 		"colymba/gridfield-bulk-editing-tools": "3.*",
 		"symbiote/silverstripe-gridfieldextensions": "^3",
-		"silverstripe/lumberjack": "2.*"
+		"silverstripe/lumberjack": "2.*",
+		"purplespider/silverstripe-asset-delete-if-unused-extension": "1.*"
 	},
 	"extra": {
 		"expose": [

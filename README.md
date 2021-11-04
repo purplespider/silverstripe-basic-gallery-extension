@@ -35,7 +35,11 @@ The Extension can be applied to any page type to enable the gallery functionalit
 
 You can also customise the CMS tab that the gallery appears on, as well as the title of the gallery displayed in the CMS, and rename the main Content tab:
 
-````
+````yml
+---
+Name: custom-basic-gallery-extension
+After: basic-gallery-extension
+---
 HomePage:
   extensions:
     - PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension
@@ -43,3 +47,14 @@ HomePage:
   gallery-cms-tab: Main
   content-cms-tab: Top Content
 ````
+
+To automatically delete image files when an image is deleted from a gallery:
+````yml
+---
+Name: custom-basic-gallery-extension
+After: basic-gallery-extension
+---
+PurpleSpider\BasicGalleryExtension\PhotoGalleryImage:
+  ondelete_delete_image_files: true
+````
+This uses [Delete Asset If Unused Extension](https://github.com/purplespider/asset-delete-if-unused-extension) to detect if the image is being used elsewhere on the site, and will only delete it if it isn't. There are caveats though, so check this module's readme, i.e. you might not want to use this on sites that have been upgraded from Silverstripe 3.

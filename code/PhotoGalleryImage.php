@@ -55,14 +55,14 @@ class PhotoGalleryImage extends DataObject
   		parent::onBeforeWrite();
   	}
 
-    protected function onBeforeDelete()
+    protected function onAfterDelete()
     {
-
+ 
   		if ($this->config()->ondelete_delete_image_files) {
-  			$this->Image()->delete();
+  			$this->Image()->deleteIfUnused();
   		}
 
-  		parent::onBeforeDelete();
+  		parent::onAfterDelete();
   	}
 
     public function fieldLabels($includerelations = true)
