@@ -39,7 +39,7 @@ Add to composer.json:
 Add to `require`:
 
 ```
-"colymba/gridfield-bulk-editing-tools": "dev-ss5-fix-json2array",
+"colymba/gridfield-bulk-editing-tools": "dev-ss5-fix-json2array as 4.0",
 ```
 
 Then install this module:
