@@ -31,7 +31,7 @@ class PhotoGalleryExtension extends DataExtension
 
     // One gallery page has many gallery images
     private static $has_many = array(
-    'PhotoGalleryImages' => PhotoGalleryImage::class
+      'PhotoGalleryImages' => PhotoGalleryImage::class . '.Album'
     );
 
     private static $owns = [
