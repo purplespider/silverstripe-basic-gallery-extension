@@ -13,13 +13,13 @@
 		"issues": "https://github.com/purplespider/silverstripe-basic-gallery-extension/issues"
 	},
 	"require": {
-		"silverstripe/framework": "^5",
-		"silverstripe/cms": "^5",
+		"silverstripe/framework": "^6",
+		"silverstripe/cms": "^6",
 
-		"colymba/gridfield-bulk-editing-tools": "^4",
-		"symbiote/silverstripe-gridfieldextensions": "^4",
-		"silverstripe/lumberjack": "^3",
-		"purplespider/silverstripe-asset-delete-if-unused-extension": "1.*"
+		"colymba/gridfield-bulk-editing-tools": "^5",
+		"symbiote/silverstripe-gridfieldextensions": "^5",
+		"silverstripe/lumberjack": "^4",
+		"purplespider/silverstripe-asset-delete-if-unused-extension": "^2"
 	},
 	"extra": {
 		"expose": [
