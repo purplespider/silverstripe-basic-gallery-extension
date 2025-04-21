@@ -9,32 +9,53 @@ use SilverStripe\ORM\DataObject;
 class PhotoGalleryImage extends DataObject
 {
 
+    /**
+     * @config
+     */
     private static $db = [
         'SortOrder' => 'Int',
         'Title' => 'Varchar(255)'
     ];
 
+    /**
+     * @config
+     */
     private static $has_one = [
         'Image' => Image::class,
         'Album' => DataObject::class,
     ];
 
+    /**
+     * @config
+     */
     private static $summary_fields = [
         'Thumbnail',
         'Title',
     ];
 
+    /**
+     * @config
+     */
     private static $owns = [
       'Image'
     ];
 
+    /**
+     * @config
+     */
     private static $table_name = 'PhotoGalleryImage';
+
+    /**
+     * @config
+     */
     private static $default_sort = "SortOrder ASC, Created ASC";
+
     public function Thumbnail()
     {
       return $this->Image()->Fit(200,200);
     }
 
+    #[\Override]
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -45,6 +66,7 @@ class PhotoGalleryImage extends DataObject
         return $fields;
     }
 
+    #[\Override]
     protected function onBeforeWrite()
     {
 
@@ -55,9 +77,10 @@ class PhotoGalleryImage extends DataObject
   		parent::onBeforeWrite();
   	}
 
+    #[\Override]
     protected function onAfterDelete()
     {
- 
+
   		if ($this->config()->ondelete_delete_image_files) {
   			$this->Image()->deleteIfUnused();
   		}
@@ -65,46 +88,51 @@ class PhotoGalleryImage extends DataObject
   		parent::onAfterDelete();
   	}
 
+    #[\Override]
     public function fieldLabels($includerelations = true)
     {
         $translatedLabels = [
             'Thumbnail' => _t('PurpleSpider\BasicGalleryExtension\PhotoGalleryImage.Thumbnail', 'Image') //used in summary_fields
         ];
-        
+
         return array_merge(parent::fieldLabels($includerelations), $translatedLabels);
     }
 
     public function getParentPhotoGalleryPage()
     {
-        if($this->Album()->ClassName == 'PurpleSpider\BasicGalleries\PhotoGalleryPage') {
+        if($this->Album()->ClassName === 'PurpleSpider\BasicGalleries\PhotoGalleryPage') {
             return $this->Album();
         }
 
         return false;
     }
-    
+
     // To support old custom templates
     public function getPhotoGalleryPage()
     {
-        return $this->getParentPhotoGalleryPage() ? $this->getParentPhotoGalleryPage() : false;
+        return $this->getParentPhotoGalleryPage() ?: false;
     }
 
-    public function canCreate($member = null, $context = array())
+    #[\Override]
+    public function canCreate($member = null, $context = [])
     {
         return true;
     }
 
-    public function canEdit($members = null)
+    #[\Override]
+    public function canEdit($member = null)
     {
         return true;
     }
 
-    public function canDelete($members = null)
+    #[\Override]
+    public function canDelete($member = null)
     {
         return true;
     }
 
-    public function canView($members = null)
+    #[\Override]
+    public function canView($member = null)
     {
         return true;
     }

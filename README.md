@@ -19,36 +19,9 @@ Or use the following modules:
 
 ## Requirements
 
--   Silverstripe 5
+-   Silverstripe 6
 
-## Installation Instructions
 
-Install:
-Until [this PR](https://github.com/colymba/GridFieldBulkEditingTools/pull/238) is merged:
-Add to composer.json:
-
-```
-    "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/purplespider/GridFieldBulkEditingTools"
-    }
-  ],
-```
-
-Add to `require`:
-
-```
-"colymba/gridfield-bulk-editing-tools": "dev-ss5-fix-json2array as 4.0",
-```
-
-Then install this module:
-
-```
-
-composer require purplespider/silverstripe-basic-gallery-extension ^4
-
-```
 
 ## v3 Upgrade Notes
 
