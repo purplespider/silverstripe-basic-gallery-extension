@@ -18,29 +18,26 @@ class CustomLumberjack extends Lumberjack
 	 *
 	 * @param FieldList $fields
 	 */
-	public function updateCMSFields(FieldList $fields)
+	#[\Override]
+ protected function updateCMSFields(FieldList $fields)
 	{
-		$excluded = $this->owner->getExcludedSiteTreeClassNames();
+		$excluded = $this->getOwner()->getExcludedSiteTreeClassNames();
 		if (!empty($excluded)) {
 			$pages = $this->getLumberjackPagesForGridfield($excluded);
-			$gridField = new GridField(
-				"ChildPages",
-				$this->getLumberjackTitle(),
-				$pages,
-				$this->getLumberjackGridFieldConfig()
-			);
+			$gridField = GridField::create("ChildPages", $this->getLumberjackTitle(), $pages, $this->getLumberjackGridFieldConfig());
 
-			$tab = new Tab('ChildPages', $this->getLumberjackTitle(), $gridField);
+			$tab = Tab::create('ChildPages', $this->getLumberjackTitle(), $gridField);
 
 			// BEGIN CUSTOMISATION
 
 			// $fields->insertAfter($tab, 'Main');
 
-			if (SiteTree::get()->filter('ParentID', $this->owner->ID)->count()) {
+			if (SiteTree::get()->filter('ParentID', $this->getOwner()->ID)->count()) {
 				$fields->insertBefore('Main', $tab);
 			} else {
 				$fields->insertAfter('Main', $tab);
 			}
+
 			// END CUSTOMISATION
 
 		}

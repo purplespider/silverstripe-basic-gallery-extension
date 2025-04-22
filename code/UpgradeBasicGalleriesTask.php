@@ -6,19 +6,35 @@ use SilverStripe\Dev\BuildTask;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\ORM\Queries\SQLSelect;
 use SilverStripe\ORM\Queries\SQLUpdate;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 
 class UpgradeBasicGalleriesTask extends BuildTask {
 
-    protected $title = 'Upgrade Basic Galleries';
-    private static $segment = 'upgrade-basic-galleries';
-    protected $description = "Applies database updates for Basic Galleries polymorphic update";
+    /**
+     * @config
+     */
+    protected string $title = 'Upgrade Basic Galleries';
 
-    public function run($request) {
-        
+    /**
+     * @config
+     */
+    private static $segment = 'upgrade-basic-galleries';
+
+    /**
+     * @config
+     */
+    protected static string $description = "Applies database updates for Basic Galleries polymorphic update";
+
+    #[\Override]protected function execute(InputInterface $input, PolyOutput $output): int
+    {
+
         $sqlQuery = new SQLSelect();
         $sqlQuery->setFrom('PhotoGalleryImage');
         $sqlQuery->selectField('PhotoGalleryPageID');
+
         $result = $sqlQuery->execute();
 
         $updatecount = 0;
@@ -36,18 +52,20 @@ class UpgradeBasicGalleriesTask extends BuildTask {
                     $updatecount++;
                 }
             }
+
             if(isset($row['PhotoGalleryBlockID']) && $row['PhotoGalleryBlockID']) {
                 $update = SQLUpdate::create('"PhotoGalleryImage"')->addWhere(['ID' => $row['ID']]);
                 $update->assign('"AlbumID"', $row['PhotoGalleryBlockID']);
-                $update->assign('"AlbumClass"', "PurpleSpider\ElementalBasicGallery\ImageGalleryBlock");
+                $update->assign('"AlbumClass"', \PurpleSpider\ElementalBasicGallery\ImageGalleryBlock::class);
                 $update->assign('"PhotoGalleryBlockID"', 0);
                 $update->execute();
                 $updatecount++;
             }
         }
 
-        echo($updatecount." records updated.");
+        $output->writeln(sprintf('Updated %d records.', $updatecount));
+
+        return Command::SUCCESS;
 
     }
-
 }
