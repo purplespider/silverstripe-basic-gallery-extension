@@ -81,7 +81,7 @@ class PhotoGalleryImage extends DataObject
     protected function onAfterDelete()
     {
 
-  		if ($this->config()->ondelete_delete_image_files) {
+  		if ($this->config()->ondelete_delete_image_files && $this->Image()->hasMethod('deleteIfUnused')) {
   			$this->Image()->deleteIfUnused();
   		}
 

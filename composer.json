@@ -18,8 +18,7 @@
 
 		"colymba/gridfield-bulk-editing-tools": "^5",
 		"symbiote/silverstripe-gridfieldextensions": "^5",
-		"silverstripe/lumberjack": "^4",
-		"purplespider/silverstripe-asset-delete-if-unused-extension": "^2"
+		"silverstripe/lumberjack": "^4"
 	},
 	"extra": {
 		"expose": [

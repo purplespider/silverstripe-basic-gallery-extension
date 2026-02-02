@@ -21,7 +21,7 @@ class UpgradeBasicGalleriesTask extends BuildTask {
     /**
      * @config
      */
-    private static $segment = 'upgrade-basic-galleries';
+    protected static string $commandName = 'upgrade-basic-galleries';
 
     /**
      * @config
