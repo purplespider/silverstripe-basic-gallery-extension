@@ -5,6 +5,7 @@ namespace PurpleSpider\BasicGalleryExtension;
 use PurpleSpider\ElementalBasicGallery\ImageGalleryBlock;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Versioned\Versioned;
 
 class PhotoGalleryImage extends DataObject
 {
@@ -69,13 +70,44 @@ class PhotoGalleryImage extends DataObject
     #[\Override]
     protected function onBeforeWrite()
     {
+        // Give new images - and images moved between galleries - a SortOrder at the
+        // end of *their own* album. The AlbumID/AlbumClass check matters: the bulk
+        // uploader writes the record twice before it knows which gallery it's in.
+        $needsSortOrder = !$this->SortOrder
+            || $this->isChanged('AlbumID', DataObject::CHANGE_VALUE)
+            || $this->isChanged('AlbumClass', DataObject::CHANGE_VALUE);
 
-  		if (!$this->SortOrder) {
-  			$this->SortOrder = PhotoGalleryImage::get()->max('SortOrder') + 1;
-  		}
+        if ($needsSortOrder && $this->AlbumID && $this->AlbumClass) {
+            $max = PhotoGalleryImage::get()
+                ->filter([
+                    'AlbumID' => $this->AlbumID,
+                    'AlbumClass' => $this->AlbumClass,
+                ])
+                ->exclude('ID', (int) $this->ID)
+                ->max('SortOrder');
 
-  		parent::onBeforeWrite();
-  	}
+            $this->SortOrder = ((int) $max) + 1;
+        }
+
+        parent::onBeforeWrite();
+    }
+
+    #[\Override]
+    protected function onAfterWrite()
+    {
+        parent::onAfterWrite();
+
+        // Only the things that actually feed into the order. This deliberately skips inline
+        // caption edits (GridFieldEditableColumns writes several rows in one save) and the
+        // SortOrder writes made by drag and drop.
+        $affectsOrder = $this->isChanged('AlbumID', DataObject::CHANGE_VALUE)
+            || $this->isChanged('AlbumClass', DataObject::CHANGE_VALUE)
+            || $this->isChanged('ImageID', DataObject::CHANGE_VALUE);
+
+        if ($affectsOrder) {
+            $this->resortAlbum();
+        }
+    }
 
     #[\Override]
     protected function onAfterDelete()
@@ -85,8 +117,45 @@ class PhotoGalleryImage extends DataObject
   			$this->Image()->deleteIfUnused();
   		}
 
+        // Keep the remaining SortOrder values contiguous
+        $this->resortAlbum();
+
   		parent::onAfterDelete();
   	}
+
+    /**
+     * Ask this image's gallery to re-apply its sort order, if it has one.
+     */
+    protected function resortAlbum()
+    {
+        // The re-sort writes these rows itself; don't let that trigger another one
+        if (PhotoGalleryExtension::isResorting()) {
+            return;
+        }
+
+        $albumClass = $this->AlbumClass;
+        $albumID = (int) $this->AlbumID;
+
+        if (!$albumClass || !$albumID) {
+            return;
+        }
+
+        if (!class_exists($albumClass) || !is_subclass_of($albumClass, DataObject::class)) {
+            return;
+        }
+
+        // Look the album up in the draft stage explicitly: during a publish the reading mode
+        // is Live, and $this->Album() would hand back an empty singleton.
+        $album = Versioned::withVersionedMode(function () use ($albumClass, $albumID) {
+            Versioned::set_stage(Versioned::DRAFT);
+
+            return DataObject::get_by_id($albumClass, $albumID);
+        });
+
+        if ($album && $album->hasMethod('resortGalleryImages')) {
+            $album->resortGalleryImages();
+        }
+    }
 
     #[\Override]
     public function fieldLabels($includerelations = true)

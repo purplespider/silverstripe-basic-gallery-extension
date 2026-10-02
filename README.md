@@ -6,7 +6,7 @@ Add this extension to any page type, to get the following batch image upload int
 
 ![Screenshot](screenshot.png)
 
-It allows images to be bulk uploaded, drag and drop reordering and inline caption adding.
+It allows images to be bulk uploaded, drag and drop reordering, automatic ordering by filename or date, and inline caption adding.
 
 Or use the following modules:
 
@@ -22,6 +22,48 @@ Or use the following modules:
 -   Silverstripe 6
 
 
+
+## Image Order
+
+Each gallery has an **Image order** dropdown, shown below the image grid in the CMS:
+
+-   **Custom (drag and drop)** - the default, and how galleries have always worked
+-   **Filename (A-Z)** / **Filename (Z-A)**
+-   **Date added (oldest first)** / **Date added (newest first)**
+
+Choosing anything other than Custom hides the drag handles and re-orders the images when the page is saved. Filenames are compared naturally, so `DSC_2.jpg` sorts before `DSC_10.jpg` rather than after it.
+
+The chosen order is applied by rewriting each image's `SortOrder`, so **no template changes are needed** - anything already looping `PhotoGalleryImages` picks up the new order automatically. Existing galleries are untouched: with no order stored they fall back to Custom.
+
+A database build (`sake db:build`) is required after upgrading, to add the `GallerySortMode` field.
+
+### Changing the Default Order
+
+The default applies to any gallery that hasn't had an order chosen yet, including galleries created before this setting existed. Set it site-wide:
+
+```yml
+---
+Name: custom-basic-gallery-extension
+After: basic-gallery-extension
+---
+PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension:
+    default_gallery_sort_mode: 'FilenameAsc'
+```
+
+or for one page type only:
+
+```yml
+PurpleSpider\BasicGalleries\PhotoGalleryPage:
+    default_gallery_sort_mode: 'CreatedDesc'
+```
+
+Valid values are `Custom`, `FilenameAsc`, `FilenameDesc`, `CreatedAsc` and `CreatedDesc`.
+
+### Adding Your Own Order
+
+`gallery_sort_modes` lists the modes offered in the dropdown. Because Silverstripe merges config arrays rather than replacing them, adding a mode in YAML is enough to make it appear; to *remove* one, use the `updateGallerySortModes` extension hook.
+
+To make a new mode actually do something, implement `updateSortedGalleryImages($images, $mode, $sorted)` on the owner: reorder `$images` and set `$sorted` to `true`. Modes that nothing claims leave `SortOrder` untouched rather than being silently renumbered. The same hook can be used to adjust one of the built-in orders.
 
 ## v3 Upgrade Notes
 
