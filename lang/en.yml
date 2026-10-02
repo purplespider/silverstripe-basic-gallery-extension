@@ -12,3 +12,10 @@ en:
   PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension:
     AddImages: Add Images
     ImageGallery: Image Gallery
+    GallerySortMode: 'Image order'
+    GallerySortModeDescription: 'Images are re-ordered when you save. Choose "Custom" to arrange them yourself by dragging and dropping.'
+    SortModeCustom: 'Custom (drag and drop)'
+    SortModeFilenameAsc: 'Filename (A-Z)'
+    SortModeFilenameDesc: 'Filename (Z-A)'
+    SortModeCreatedAsc: 'Date added (oldest first)'
+    SortModeCreatedDesc: 'Date added (newest first)'

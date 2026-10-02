@@ -6,3 +6,7 @@ SilverStripe\Admin\LeftAndMain:
     - 'purplespider/silverstripe-basic-gallery-extension:client/dist/css/cms.css'
 PurpleSpider\BasicGalleryExtension\PhotoGalleryImage:
   ondelete_delete_image_files: false
+PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension:
+  # Used by galleries that have no "Image order" chosen yet - including every gallery that
+  # existed before this setting was added. Can also be set on an individual page class.
+  default_gallery_sort_mode: 'Custom'

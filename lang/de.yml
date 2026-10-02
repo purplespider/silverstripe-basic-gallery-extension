@@ -12,3 +12,10 @@ de:
   PurpleSpider\BasicGalleryExtension\PhotoGalleryExtension:
     AddImages: Bilder hinzufügen
     ImageGallery: Bildergalerie
+    GallerySortMode: 'Reihenfolge der Bilder'
+    GallerySortModeDescription: 'Die Bilder werden beim Speichern neu sortiert. Wählen Sie "Benutzerdefiniert", um sie selbst per Drag-and-drop anzuordnen.'
+    SortModeCustom: 'Benutzerdefiniert (Drag-and-drop)'
+    SortModeFilenameAsc: 'Dateiname (A-Z)'
+    SortModeFilenameDesc: 'Dateiname (Z-A)'
+    SortModeCreatedAsc: 'Hinzugefügt am (älteste zuerst)'
+    SortModeCreatedDesc: 'Hinzugefügt am (neueste zuerst)'
