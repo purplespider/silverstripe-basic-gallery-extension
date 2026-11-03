@@ -65,12 +65,14 @@ Valid values are `Custom`, `FilenameAsc`, `FilenameDesc`, `CreatedAsc` and `Crea
 
 To make a new mode actually do something, implement `updateSortedGalleryImages($images, $mode, $sorted)` on the owner: reorder `$images` and set `$sorted` to `true`. Modes that nothing claims leave `SortOrder` untouched rather than being silently renumbered. The same hook can be used to adjust one of the built-in orders.
 
-## v3 Upgrade Notes
+## Upgrading from v2 or Earlier
 
-Upgrading to v3 will break existing galleries due to a change to a polymorphic relation, to fix:
+v3 moved gallery images to a polymorphic relation. Images from before v3 stay on the old `PhotoGalleryPageID` and `PhotoGalleryBlockID` columns, and their galleries render empty with no error, until they've been migrated. This applies however many versions you're jumping, including straight to the latest. To fix:
 
-1. Run `dev/build`
-2. Run `/dev/tasks/upgrade-basic-galleries` script.
+1. Build the database: `sake db:build --flush`
+2. Run the task: `sake tasks:upgrade-basic-galleries` (or visit `/dev/tasks/upgrade-basic-galleries`)
+
+The task is safe to re-run. It reports how many images it moved, and leaves alone any whose page or Elemental block no longer exists, so a skipped image can still be picked up if it comes back.
 
 ## Config
 
